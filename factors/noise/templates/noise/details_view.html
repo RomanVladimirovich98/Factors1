@@ -1,0 +1,14 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Подробнее об измерениях{% endblock %}
+{% block content %}
+    <div class="features">
+        <h1> Основание для выполнения измерений: {{ noise.base }}</h1>
+        <p> Адрес проведения измерений: {{ noise.address }}</p>
+        <p> Дата проведения измерений: {{ noise.date }}</p>
+        <p> Надо подумать что тут будет: {{ noise.id }}</p>
+        <a href="{% url 'calculations' noise.id %}" class="btn btn-warning">Показать анализ</a>
+        <a href="{% url 'delete' noise.id %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'update' noise.id %}" class="btn btn-info">Редактировать</a>
+    </div>
+{% endblock %}

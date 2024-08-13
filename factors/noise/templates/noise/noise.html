@@ -1,0 +1,22 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Главная страница{% endblock %}
+{% block content %}
+    <div class="features">
+        <p> Проведенные измерения </p>
+    {% if noise_result %}
+        {% for i in noise_result%}
+            <div class="alert alert-warning">
+                <h3> {{ i.base }}</h3>
+                <p> {{ i.address }} </p>
+                <p> {{ i.date }} </p>
+                <p> {{ i }} </p>
+                <a href="{% url 'noise-detail' i.id %}" class="btn btn-warning">Подробнее</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h5>Вы пока не занесли измерения в базу данных</h5>
+    {% endif %}
+        <a href="{% url 'noise_create' %}" class="btn btn-info">Добавить измерения</a>
+    </div>
+{% endblock %}

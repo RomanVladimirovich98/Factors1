@@ -1,0 +1,66 @@
+{% extends 'main/layout.html' %}
+{% block title %}A?{% endblock %}
+{% block content %}
+<div class="features">
+    <p>Основание для выполнения поручения: {{total_intermittent.info_measurements.base}} {{total_constant.info_measurements.base}} </p>
+    {% if total_intermittent.breach or total_constant.breach %}
+        <h1>В результате проведенных измерений установлено, что уровни шума, измеренные {{total_intermittent.info_measurements.date}} {{total_constant.info_measurements.date}} по адресу: {{total_intermittent.info_measurements.address}} {{total_constant.info_measurements.address}} не соответствуют нормативным значениям</h1>
+    {% else %}
+        <h1>В результате проведенных измерений установлено, что уровни шума, измеренные {{total_intermittent.info_measurements.date}} {{total_constant.info_measurements.date}} по адресу: {{total_intermittent.info_measurements.address}} {{total_constant.info_measurements.address}} соответствуют нормативным значениям</h1>
+    {% endif %}
+    <h1>Результаты измерений:</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>Частота</td>
+                <td>Измеренное значение</td>
+                <td>Неопределенность измерений</td>
+                <td>Нормативное значение</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in total_intermittent.data_intermittent_noise.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                    <td>
+                        {% for key1, value1 in total_intermittent.uncertainty.items %}
+                            {% if key1 == key %}
+                                {{ value1 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for key2, value2 in total_intermittent.normative_value.items %}
+                            {% if key2 == key %}
+                                {{ value2 }}
+                            {% endif %}
+                        {% endfor %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tbody>
+            {% for key, value in total_constant.data_constant_noise.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                    <td>
+                        {% for key1, value1 in total_constant.data_constant_noise_uncertainty.items %}
+                            {% if key1 == key %}
+                                {{ value1 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for key2, value2 in total_constant.normative_value.items %}
+                            {% if key2 == key %}
+                                {{ value2 }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+</div>
+{% endblock %}
